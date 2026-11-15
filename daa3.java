@@ -1,49 +1,62 @@
 
 import java.util.*;
 
-class Knapsack {
+public class k{
+
     public static void main(String[] args) {
 
-        int[] weight = {10, 20, 30};
         int[] profit = {60, 100, 120};
+        int[] weight = {10, 20, 30};
+
         int capacity = 50;
+        double totalProfit = 0;
 
-        double total = 0;
+        double[] ratio = new double[profit.length];
 
-        double[] ratio = new double[weight.length];
-
-        for (int i = 0; i < weight.length; i++)
+        // Calculate profit/weight ratio
+        for (int i = 0; i < profit.length; i++) {
             ratio[i] = (double) profit[i] / weight[i];
+        }
 
-        for (int i = 0; i < weight.length; i++) {
-            for (int j = i + 1; j < weight.length; j++) {
+        // Sort items in descending order of ratio
+        for (int i = 0; i < ratio.length; i++) {
+            for (int j = i + 1; j < ratio.length; j++) {
 
                 if (ratio[i] < ratio[j]) {
-                    double r = ratio[i];
+
+                    double temp = ratio[i];
                     ratio[i] = ratio[j];
-                    ratio[j] = r;
+                    ratio[j] = temp;
 
-                    int t = weight[i];
-                    weight[i] = weight[j];
-                    weight[j] = t;
-
-                    t = profit[i];
+                    int t = profit[i];
                     profit[i] = profit[j];
                     profit[j] = t;
+
+                    t = weight[i];
+                    weight[i] = weight[j];
+                    weight[j] = t;
                 }
             }
         }
 
-        for (int i = 0; i < weight.length; i++) {
+        // Select items greedily
+        for (int i = 0; i < profit.length; i++) {
+
             if (capacity >= weight[i]) {
-                total += profit[i];
-                capacity -= weight[i];
+
+                capacity = capacity - weight[i];
+                totalProfit = totalProfit + profit[i];
+
             } else {
-                total += ratio[i] * capacity;
+
+                totalProfit = totalProfit +
+                    ratio[i] * capacity;
+
+                capacity = 0;
                 break;
             }
         }
 
-        System.out.println("Maximum Profit = " + total);
+        System.out.println("Maximum Profit = " + totalProfit);
     }
 }
