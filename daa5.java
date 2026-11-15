@@ -1,59 +1,72 @@
+class EightQueens {
 
-class NQueen {
+    static int N = 8;
+    static int board[][] = new int[N][N];
 
-    static int n = 4;
-    static int[][] board = new int[n][n];
+    // Check whether queen can be placed safely
+    static boolean isSafe(int row, int col) {
 
-    static boolean safe(int row, int col) {
-
-        for (int i = 0; i < row; i++)
-            if (board[i][col] == 1)
+        // Check left side of current row
+        for (int i = 0; i < col; i++) {
+            if (board[row][i] == 1)
                 return false;
+        }
 
-        for (int i = row - 1, j = col - 1;
-             i >= 0 && j >= 0; i--, j--)
+        // Check upper diagonal
+        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
             if (board[i][j] == 1)
                 return false;
+        }
 
-        for (int i = row - 1, j = col + 1;
-             i >= 0 && j < n; i--, j++)
+        // Check lower diagonal
+        for (int i = row, j = col; i < N && j >= 0; i++, j--) {
             if (board[i][j] == 1)
                 return false;
+        }
 
         return true;
     }
 
-    static boolean solve(int row) {
+    // Solve using backtracking
+    static boolean solve(int col) {
 
-        if (row == n)
+        if (col >= N)
             return true;
 
-        for (int col = 0; col < n; col++) {
+        for (int row = 0; row < N; row++) {
 
-            if (safe(row, col)) {
+            if (isSafe(row, col)) {
+
                 board[row][col] = 1;
 
-                if (solve(row + 1))
+                if (solve(col + 1))
                     return true;
 
                 board[row][col] = 0;
             }
         }
+
         return false;
     }
 
     public static void main(String[] args) {
 
+        // Place first queen
         board[0][0] = 1;
 
         if (solve(1)) {
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++)
+
+            System.out.println("8 Queens Solution:");
+
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < N; j++) {
                     System.out.print(board[i][j] + " ");
+                }
                 System.out.println();
             }
+
         } else {
-            System.out.println("No solution");
+            System.out.println("No solution exists");
         }
     }
 }
