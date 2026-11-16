@@ -6,7 +6,8 @@ public class fibo{
   public static void main(String[] args){
     Scanner sc=new Scanner(System.in);
     int steps=0;
-    System.out.println("enter the number of steps:");
+    System.out.println("enter the number of ste
+                       ps:");
     int n=sc.nextInt();
     int a=0;
     int  b=1;
