@@ -1,35 +1,50 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-contract MarksManagmtSys {
-    struct Student {
+contract Student {
+
+    // Structure to store student details
+    struct StudentData {
         uint id;
-        string fName;
-        string lName;
-        uint marks;
+        string name;
+        uint age;
+        string course;
     }
 
-    Student[] public stdRecords;
-    address owner = msg.sender;
+    // Array to store multiple students
+    StudentData[] public students;
 
-    modifier onlyOwner() {
-        require(msg.sender == owner);
-        _;
+    // Event for fallback function
+    event FallbackCalled(address sender, uint value, bytes data);
+
+    // Function to add student details
+    function addStudent(
+        uint _id,
+        string memory _name,
+        uint _age,
+        string memory _course
+    ) public {
+        students.push(StudentData(_id, _name, _age, _course));
     }
 
-    function addNewRecords(uint id, string memory first,
-        string memory last, uint marks) public onlyOwner {
-        stdRecords.push(Student(id, first, last, marks));
+    // Function to get student details
+    function getStudent(uint index)
+        public
+        view
+        returns (uint, string memory, uint, string memory)
+    {
+        StudentData memory s = students[index];
+
+        return (s.id, s.name, s.age, s.course);
     }
 
-    function viewMarks(uint index) public view returns (uint) {
-        return stdRecords[index].marks;
+    // Function to get total number of students
+    function getStudentCount() public view returns (uint) {
+        return students.length;
     }
 
-    function bonusMarks(uint index, uint bonus) public onlyOwner {
-        stdRecords[index].marks += bonus;
+    // Fallback function
+    fallback() external payable {
+        emit FallbackCalled(msg.sender, msg.value, msg.data);
     }
-
-    receive() external payable {}
-    fallback() external payable {}
 }
