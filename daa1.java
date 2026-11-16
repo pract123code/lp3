@@ -50,12 +50,18 @@ public class Fibonacci {
     }
 }
 
+
 import java.util.Scanner;
 
 public class Fibonacci {
 
+    static int recursiveSteps = 0;
+    static int nonRecursiveSteps = 0;
+
     // Recursive Method
     static int recursive(int n) {
+        recursiveSteps++;
+
         if (n == 0)
             return 0;
 
@@ -70,7 +76,10 @@ public class Fibonacci {
         int a = 0, b = 1;
 
         for (int i = 0; i < n; i++) {
+
             System.out.print(a + " ");
+
+            nonRecursiveSteps++;
 
             int c = a + b;
             a = b;
@@ -87,12 +96,21 @@ public class Fibonacci {
 
         // Recursive Output
         System.out.println("\nRecursive Fibonacci:");
+
         for (int i = 0; i < n; i++) {
             System.out.print(recursive(i) + " ");
         }
 
+        System.out.println("\nRecursive Step Count: " + recursiveSteps);
+
         // Non-Recursive Output
-        System.out.println("\n\nNon-Recursive Fibonacci:");
+        System.out.println("\nNon-Recursive Fibonacci:");
+
         nonRecursive(n);
+
+        System.out.println("\nNon-Recursive Step Count: " + nonRecursiveSteps);
+
+        sc.close();
     }
 }
+
