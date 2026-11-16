@@ -24,3 +24,75 @@ public class fibo{
     
       }
 }
+import java.util.*;
+import java.util.Scanner;
+
+public class Fibonacci {
+  static int steps=0;
+    static int fib(int n) {
+         steps++;
+        if (n <= 1)
+            return n;
+
+        return fib(n - 1) + fib(n - 2);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of terms: ");
+        int n = sc.nextInt();
+        System.out.println("fibo series:");
+        for (int i = 0; i < n; i++) {
+            System.out.print(fib(i) + " ");
+        }
+     System.out.println("no of steps:"+steps);
+    }
+}
+
+import java.util.Scanner;
+
+public class Fibonacci {
+
+    // Recursive Method
+    static int recursive(int n) {
+        if (n == 0)
+            return 0;
+
+        if (n == 1)
+            return 1;
+
+        return recursive(n - 1) + recursive(n - 2);
+    }
+
+    // Non-Recursive Method
+    static void nonRecursive(int n) {
+        int a = 0, b = 1;
+
+        for (int i = 0; i < n; i++) {
+            System.out.print(a + " ");
+
+            int c = a + b;
+            a = b;
+            b = c;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of terms: ");
+        int n = sc.nextInt();
+
+        // Recursive Output
+        System.out.println("\nRecursive Fibonacci:");
+        for (int i = 0; i < n; i++) {
+            System.out.print(recursive(i) + " ");
+        }
+
+        // Non-Recursive Output
+        System.out.println("\n\nNon-Recursive Fibonacci:");
+        nonRecursive(n);
+    }
+}
